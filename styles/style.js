@@ -7,13 +7,48 @@ var shadowButton = '#517889';
 var backgroundLight = '#EFF5F9';
 
 var backgroundGrey = '#F2F2F2';
+
+var textBlack = '#171717';
 var textGrey = '#898E91';
 
-var maleColor = '#389DC7';
-
-var femaleColor = '#EF5C86';
+var maleColor = '#5097C7';
+var femaleColor = '#E26286';
 
 var flex = 1;
+
+
+
+var gapSmall = 6;
+var gap = 10;
+var gapLarge = 18;
+
+
+// Text sizes and colors
+var text = {
+  size: {
+    body: 15,
+    bodySmall: 14,
+    bodyLarge: 16,
+    heading: 18,
+    headingSmall: 15,
+  },
+  color: {
+    body: '#545454',
+    dark: '#171717',
+    light: '#666666',
+    lightBlue: '#8BA9BD',
+  },
+};
+
+
+// Bar chart
+var barChart = {
+  row: {
+    height: 22,
+  },
+};
+
+
 
 var style = StyleSheet.create({
 
@@ -46,10 +81,117 @@ var style = StyleSheet.create({
     backgroundColor: mainBlue,
   },
 
-  /**
-   * HomeScreen
-   */
 
+
+/*------------------------------------------------------------------------------------
+  CARD
+------------------------------------------------------------------------------------*/
+  card: {
+    backgroundColor: 'white',
+    shadowColor: '#A0B9C9',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
+  },
+
+
+    card_header: {
+      flex: 1,
+      flexDirection: 'row',
+      padding: 11,
+      paddingTop: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#DFEAF2',
+    },
+
+
+      card_header_title: {
+        fontSize: text.size.heading,
+        color: text.color.dark,
+        fontWeight: '700',
+      },
+
+
+      card_header_subtitle: {
+        color: text.color.light,
+        fontSize: 13,
+        lineHeight: 13 * 1.35,
+        fontWeight: '400',
+      },
+
+
+       card_header_value: {
+        fontSize: text.size.heading * 1.35,
+        color: text.color.dark,
+        fontWeight: '400',
+      },
+
+
+  cardPadding: {
+    padding: 11,
+  },
+
+
+  cardPaddingHorizontal: {
+    paddingHorizontal: 11,
+  },
+
+
+  cardMargin: {
+    margin: 10,
+    marginTop: 5,
+  },
+
+
+
+/*------------------------------------------------------------------------------------
+  STACK LIST
+------------------------------------------------------------------------------------*/
+  stackList: {
+    //
+  },
+
+
+    stackList_item: {
+      paddingVertical: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: '#DFEAF2',
+    },
+
+
+      stackList_item_title: {
+        marginBottom: 1,
+        fontSize: text.size.headingSmall,
+        color: text.color.dark,
+        fontWeight: 'bold',
+      },
+
+
+      stackList_item_body: {
+        fontSize: text.size.bodySmall,
+        color: text.color.body,
+        fontWeight: 'normal',
+        lineHeight: text.size.bodySmall * 1.35,
+      },
+
+
+    stackList_itemPadding: {
+      paddingHorizontal: 12,
+    },
+
+
+    stackList_itemLast: {
+      borderBottomWidth: 0,
+    },
+
+
+
+/*------------------------------------------------------------------------------------
+  HOMESCREEN
+------------------------------------------------------------------------------------*/
   mainContainer: {
     flex: 1,
     backgroundColor: mainBlue,
@@ -367,10 +509,14 @@ var style = StyleSheet.create({
     padding: 4,
   },
 
-  /**
-   * Demographics
-   */
 
+
+
+
+
+/*------------------------------------------------------------------------------------
+  DEMOGRAPHICS
+------------------------------------------------------------------------------------*/
   maleContainer: {
     height: 145,
     backgroundColor: maleColor,
@@ -419,84 +565,114 @@ var style = StyleSheet.create({
     right: 2
   },
 
-  demographicsStatContainer: {
-    backgroundColor: 'white',
-    padding: 10,
-    shadowColor: mainBlue,
-    shadowOffset: {width: 0, height: 0},
-    shadowRadius: 2,
-    shadowOpacity: 0.4,
+
+  // demographics_barChart: {
+  //   backgroundColor: 'white',
+  //   padding: 10,
+  //   shadowColor: card.shadow.color,
+  //   shadowOffset: { width: 1, height: 1 },
+  //   shadowRadius: 4,
+  //   shadowOpacity: 0.5,
+  // },
+
+
+
+
+
+/*------------------------------------------------------------------------------------
+  BAR CHART DEFAULTS
+------------------------------------------------------------------------------------*/
+  barChart: {
+    //
   },
 
-  demographicsStatTitle: {
-    textAlign: 'center',
-    fontSize: 18,
-    paddingBottom: 6,
-    fontWeight: 'bold',
-  },
 
-  demographicsStatLabel: {
-    textAlign: 'center',
-    fontSize: 16,
-    backgroundColor: 'white',
-    margin: 2,
-    fontWeight: 'bold',
-  },
+    barChart_row: {
+      //
+    },
 
-  barContainer: {
-    flex: 1,
-    height: 19.5,
-    marginVertical: 2,
-    flexDirection: 'row'
-  },
 
-  maleBar: {
-    backgroundColor: maleColor,
-  },
+      barChart_row_label: {
+        height: barChart.row.height,
+        marginBottom: 2,
+        paddingTop: 2,
+        color: textBlack,
+        fontSize: 15,
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
 
-  femaleBar: {
-    backgroundColor: femaleColor,
-  },
 
-  demographicsPercentageText: {
-    fontSize: 14,
-    marginVertical: 3.25,
-    color: textGrey,
-  },
+      barChart_row_value: {
+        marginBottom: 2,
+        paddingTop: 2,
+        height: barChart.row.height,
+        color: '#414141',
+        fontSize: 15,
+      },
+
+
+      barChart_row_line: {
+        flex: 1,
+        flexDirection: 'row',
+        height: barChart.row.height,
+        padding: 0,
+        margin: 0,
+        overflow: 'hidden',
+      },
+
+
+        barChart_row_line_inner: {
+          height: barChart.row.height,
+        },
+
+
+        maleBar: {
+          backgroundColor: maleColor,
+        },
+
+        femaleBar: {
+          backgroundColor: femaleColor,
+        },
+
+
+
+
+
 
   /**
    * AsylumSeekers
    */
 
-  asylumSeekersTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+  // asylumSeekersTitle: {
+  //   fontSize: 18,
+  //   fontWeight: 'bold',
+  // },
 
-  asylumSeekersTitleSmall: {
-    fontSize: 14,
-    color: textGrey,
-  },
+  // asylumSeekersTitleSmall: {
+  //   fontSize: 14,
+  //   color: textGrey,
+  // },
 
-  asylumSeekersLine: {
-    height: 1,
-    backgroundColor: lightBlue,
-    marginVertical: 8,
-  },
+  // asylumSeekersLine: {
+  //   height: 1,
+  //   backgroundColor: lightBlue,
+  //   marginVertical: 8,
+  // },
 
-  asylumSeekersCard: {
-    marginBottom: 6,
-    backgroundColor: 'white',
-    shadowColor: mainBlue,
-    shadowOffset: {width: 0, height: 0},
-    shadowRadius: 2,
-    shadowOpacity: 0.4,
-    paddingBottom: 6,
-  },
+  // asylumSeekersCard: {
+  //   marginBottom: 6,
+  //   backgroundColor: 'white',
+  //   shadowColor: mainBlue,
+  //   shadowOffset: {width: 0, height: 0},
+  //   shadowRadius: 2,
+  //   shadowOpacity: 0.4,
+  //   paddingBottom: 6,
+  // },
 
-  asylumSeekersPadding: {
-    padding: 6,
-  }
+  // asylumSeekersPadding: {
+  //   padding: 6,
+  // }
 
 });
 

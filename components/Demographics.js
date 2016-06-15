@@ -101,7 +101,7 @@ class Demographics extends Component {
 
   render() {
     if (this.state.demographics === null) { return this.props.root.renderLoader(); }
-    if (this.state.demographics === false) { 
+    if (this.state.demographics === false) {
       return (
         <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
           <Text>No data</Text>
@@ -115,15 +115,15 @@ class Demographics extends Component {
           {this.containerStyleFemale()}
           {this.smallPercentageLabel()}
         </View>
-        <View style={style.demographicsStatContainer}>
+        <View style={[style.card, style.cardPadding]}>
           <View>
-            <Text style={style.demographicsStatTitle}>Age</Text>
+            <Text style={style.barChart_row_label}>Age</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <View style={{flex: 15}}>
               {ranges.map((val) => {
                 return (
-                  <Text key={'male' + val} style={style.demographicsPercentageText}>
+                  <Text key={'male' + val} style={style.barChart_row_value}>
                     {this.state.demographics['male' + val]}%
                   </Text>
                 );
@@ -135,20 +135,27 @@ class Demographics extends Component {
                 var to = Math.floor(this.state.demographics['male' + val]);
                 Animated.timing(animation, {toValue: to}).start();
                 return (
-                  <View key={'m' + val} style={style.barContainer}>
-                    <View style={{backgroundColor: 'white', flex: 100 - to}}></View>
-                    <Animated.View style={[style.maleBar, {flex: animation}]}></Animated.View>
+                  <View key={'m' + val} style={style.barChart_row_line}>
+                    <View style={[
+                      style.barChart_row_line_inner,
+                      {backgroundColor: 'white', flex: 100 - to}
+                    ]}></View>
+                    <Animated.View style={[
+                      style.barChart_row_line_inner,
+                      style.maleBar,
+                      {flex: animation}
+                    ]}></Animated.View>
                   </View>
                 );
               })}
             </View>
             <View style={{flex: 20}}>
-              <Text style={style.demographicsStatLabel}>0-4</Text>
-              <Text style={style.demographicsStatLabel}>5-11</Text>
-              <Text style={style.demographicsStatLabel}>12-17</Text>
-              <Text style={style.demographicsStatLabel}>18-59</Text>
-              <Text style={style.demographicsStatLabel}>60+</Text>
-              <Text style={style.demographicsStatLabel}>N/A</Text>
+              <Text style={style.barChart_row_label}>0-4</Text>
+              <Text style={style.barChart_row_label}>5-11</Text>
+              <Text style={style.barChart_row_label}>12-17</Text>
+              <Text style={style.barChart_row_label}>18-59</Text>
+              <Text style={style.barChart_row_label}>60+</Text>
+              <Text style={style.barChart_row_label}>N/A</Text>
             </View>
             <View style={{flex: 25}}>
               {ranges.map((val) => {
@@ -156,9 +163,16 @@ class Demographics extends Component {
                 var to = Math.floor(this.state.demographics['female' + val]);
                 Animated.timing(animation, {toValue: to}).start();
                 return (
-                  <View key={'f' + val} style={style.barContainer}>
-                    <Animated.View style={[style.femaleBar, {flex: animation}]}></Animated.View>
-                    <View style={{backgroundColor: 'white', flex: 100 - to}}></View>
+                  <View key={'f' + val} style={style.barChart_row_line}>
+                    <Animated.View style={[
+                      style.barChart_row_line_inner,
+                      style.femaleBar,
+                      {flex: animation}
+                    ]}></Animated.View>
+                    <View style={[
+                      style.barChart_row_line_inner,
+                      {backgroundColor: 'white', flex: 100 - to}
+                    ]}></View>
                   </View>
                 );
               })}
@@ -166,7 +180,7 @@ class Demographics extends Component {
             <View style={{flex: 15, alignItems: 'flex-end'}}>
               {ranges.map((val) => {
                 return (
-                  <Text key={'female' + val} style={style.demographicsPercentageText}>
+                  <Text key={'female' + val} style={style.barChart_row_value}>
                     {this.state.demographics['female' + val]}%
                   </Text>
                 );

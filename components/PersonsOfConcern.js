@@ -216,7 +216,7 @@ class PersonsOfConcern extends Component {
       });
     }).done();
   }
-  
+
   componentDidMount () {
     this.fetchDataForSelectedYear();
   }
@@ -237,18 +237,18 @@ class PersonsOfConcern extends Component {
 
   renderRowTopCountriesOfOrigin (row, section, key) {
     return (
-      <View style={{flex}}>
+      <View style={[style.stackList_item]}>
         <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.countriesOfOriginTotalText, {flex}]}>{row.country_of_origin_en}</Text>
-          <Text style={style.countriesOfOriginTotalText}>{row.total_population}</Text>
+          <Text style={[style.stackList_item_title, {flex}]}>{row.country_of_origin_en}</Text>
+          <Text style={[style.stackList_item_title]}>{row.total_population}</Text>
         </View>
         <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.countriesOfOriginText, {flex}]}>Refugees</Text>
-          <Text style={style.countriesOfOriginText}>{row.refugees}</Text>
+          <Text style={[style.stackList_item_body, {flex}]}>Refugees</Text>
+          <Text style={[style.stackList_item_body]}>{row.refugees}</Text>
         </View>
         <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.countriesOfOriginText, {flex}]}>Asylum seekers</Text>
-          <Text style={style.countriesOfOriginText}>{row.asylum_seekers}</Text>
+          <Text style={[style.stackList_item_body, {flex}]}>Asylum seekers</Text>
+          <Text style={[style.stackList_item_body]}>{row.asylum_seekers}</Text>
         </View>
       </View>
     );
@@ -271,13 +271,13 @@ class PersonsOfConcern extends Component {
     if (this.state.resettlement === null) { return this.props.root.renderLoader(); }
     return (
       <ScrollView style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
-        <View style={style.statisticsBlockContainer}>
-          <View style={style.statisticsBlockHeader}>
+        <View style={[style.card, style.cardMargin]}>
+          <View style={style.card_header}>
             <View style={{flex}}>
-              <Text style={style.statisticsBlockHeaderMainTitle}>Persons of concern</Text>
-              <Text style={style.statisticsBlockHeaderMiniTitle}>Total persons of concern within {this.props.route.title}</Text>
+              <Text style={style.card_header_title}>Persons of concern</Text>
+              <Text style={style.card_header_subtitle}>Total persons of concern</Text>
             </View>
-            <Text style={style.statisticsBlockHeaderTotal}>{this.state.personsOfConcernTotal}</Text>
+            <Text style={style.card_header_value}>{this.state.personsOfConcernTotal}</Text>
           </View>
           <View style={style.statisticsBody}>
             <PieChart config={this.state.personsOfConcernChart} style={style.statisticsChart}/>
@@ -292,11 +292,11 @@ class PersonsOfConcern extends Component {
             </View>
           </View>
         </View>
-        <View style={style.statisticsBlockContainer}>
-          <View style={style.statisticsBlockHeader}>
+        <View style={[style.card, style.cardMargin]}>
+          <View style={style.card_header}>
             <View style={{flex}}>
-              <Text style={style.statisticsBlockHeaderMainTitle}>Countries of origin</Text>
-              <Text style={style.statisticsBlockHeaderMiniTitle}>Total persons per country of origin</Text>
+              <Text style={style.card_header_title}>Countries of origin</Text>
+              <Text style={style.card_header_subtitle}>Total persons per country of origin</Text>
             </View>
           </View>
           <View style={style.statisticsBody}>
@@ -325,13 +325,13 @@ class PersonsOfConcern extends Component {
             </TouchableHighlight>
           </View>
         </View>
-        <View style={style.statisticsBlockContainer}>
-          <View style={style.statisticsBlockHeader}>
+        <View style={[style.card, style.cardMargin]}>
+          <View style={style.card_header}>
             <View style={{flex}}>
-              <Text style={style.statisticsBlockHeaderMainTitle}>Resettlement</Text>
-              <Text style={style.statisticsBlockHeaderMiniTitle}>Persons resettled to other countries</Text>
+              <Text style={style.card_header_title}>Resettlement</Text>
+              <Text style={style.card_header_subtitle}>Total persons resettled</Text>
             </View>
-            <Text style={style.statisticsBlockHeaderTotal}>{this.state.resettlementTotal}</Text>
+            <Text style={style.card_header_value}>{this.state.resettlementTotal}</Text>
           </View>
           <View style={style.statisticsBody}>
             <ListView

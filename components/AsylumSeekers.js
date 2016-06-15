@@ -48,54 +48,60 @@ class AsylumSeekers extends Component {
 
   renderRow (row) {
     return (
-      <View style={style.asylumSeekersCard}>
-        <View style={style.asylumSeekersPadding}>
-          <Text style={style.asylumSeekersTitle}>{row.country_of_origin_en}</Text>
-          <Text style={style.asylumSeekersTitleSmall}>Asylum-seekers originating from {row.country_of_origin_en}</Text>
-        </View>
-        <View style={style.asylumSeekersLine}/>
-        <View style={style.asylumSeekersPadding}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitle, {flex}]}>Total persons start-year</Text>
-            <Text style={style.asylumSeekersTitle}>{row.pending_start_of_year_total_persons}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitleSmall, {flex}]}>Of which UNHCR assisted</Text>
-            <Text style={style.asylumSeekersTitleSmall}>{row.pending_start_of_year_of_which_unhcr_assisted}</Text>
+      <View style={[style.card, style.cardMargin]}>
+        <View style={[style.card_header]}>
+          <View style={{flex}}>
+            <Text style={[style.card_header_title]}>
+              {row.country_of_origin_en}
+            </Text>
+            <Text style={[style.card_header_subtitle]}>
+              Asylum-seekers originating from {row.country_of_origin_en}
+            </Text>
           </View>
         </View>
-        <View style={style.asylumSeekersLine}/>
-        <View style={style.asylumSeekersPadding}>
+
+        <View style={[style.stackList_item, style.stackList_itemPadding]}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitle, {flex}]}>Applied during year</Text>
-            <Text style={style.asylumSeekersTitle}>{row.applied_during_year}</Text>
+            <Text style={[style.stackList_item_title, {flex}]}>Total persons start-year</Text>
+            <Text style={[style.stackList_item_body]}>{row.pending_start_of_year_total_persons}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitleSmall, {flex}]}>Recognized</Text>
-            <Text style={style.asylumSeekersTitleSmall}>{row.decisions_recognized}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitleSmall, {flex}]}>Rejected</Text>
-            <Text style={style.asylumSeekersTitleSmall}>{row.rejected}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitleSmall, {flex}]}>Otherwise closed</Text>
-            <Text style={style.asylumSeekersTitleSmall}>{row.otherwise_closed}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitleSmall, {flex}]}>Other</Text>
-            <Text style={style.asylumSeekersTitleSmall}>{row.decisions_other}</Text>
+            <Text style={[style.stackList_item_body, {flex}]}>Of which UNHCR assisted</Text>
+            <Text style={style.stackList_item_body}>{row.pending_start_of_year_of_which_unhcr_assisted}</Text>
           </View>
         </View>
-        <View style={style.asylumSeekersLine}/>
-        <View style={style.asylumSeekersPadding}>
+
+        <View style={[style.stackList_item, style.stackList_itemPadding]}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitle, {flex}]}>Total persons end-year</Text>
-            <Text style={style.asylumSeekersTitle}>{row.pending_end_of_year_total_persons}</Text>
+            <Text style={[style.stackList_item_title, {flex}]}>Applied during year</Text>
+            <Text style={[style.stackList_item_title]}>{row.applied_during_year}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={[style.asylumSeekersTitleSmall, {flex}]}>Of which UNHCR assisted</Text>
-            <Text style={style.asylumSeekersTitleSmall}>{row.pending_end_of_year_of_which_unhcr_assisted}</Text>
+            <Text style={[style.stackList_item_body, {flex}]}>Recognized</Text>
+            <Text style={[style.stackList_item_body]}>{row.decisions_recognized}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[style.stackList_item_body, {flex}]}>Rejected</Text>
+            <Text style={[style.stackList_item_body]}>{row.rejected}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[style.stackList_item_body, {flex}]}>Otherwise closed</Text>
+            <Text style={style.stackList_item_body}>{row.otherwise_closed}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[style.stackList_item_body, {flex}]}>Other</Text>
+            <Text style={style.stackList_item_body}>{row.decisions_other}</Text>
+          </View>
+        </View>
+
+        <View style={[style.stackList_item, style.stackList_itemPadding, style.stackList_itemLast]}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[style.stackList_item_title, {flex}]}>Total persons end-year</Text>
+            <Text style={style.stackList_item_title}>{row.pending_end_of_year_total_persons}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[style.stackList_item_body, {flex}]}>Of which UNHCR assisted</Text>
+            <Text style={style.stackList_item_body}>{row.pending_end_of_year_of_which_unhcr_assisted}</Text>
           </View>
         </View>
       </View>
@@ -115,7 +121,7 @@ class AsylumSeekers extends Component {
         <View style={style.asylumSeekersPadding}>
           <View style={{flex}}>
             <Text style={style.asylumSeekersTitle}>Refugee status determination</Text>
-            <Text style={style.asylumSeekersTitleSmall}>Progress of asylum-seekers</Text>
+            <Text style={style.stackList_item_title}>Progress of asylum-seekers</Text>
           </View>
           <View style={style.asylumSeekersLine}/>
         </View>
