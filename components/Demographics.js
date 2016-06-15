@@ -9,7 +9,9 @@ import {
   StyleSheet,
   Text,
   View,
+  Animated,
   ListView,
+  Image,
   TouchableHighlight,
 } from 'react-native';
 
@@ -18,19 +20,161 @@ import fetcher from '../library/fetcher';
 import helper from '../library/helper';
 import YearNavigator from './YearNavigator';
 
+const MIN_PERCENTAGE = 25;
 var flex = 1;
+var genders = ['male', 'female'];
+var ranges = ['0_4', '5_11', '12_17', '18_59', '60', 'other_value'];
 
 class Demographics extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {};
+    this.state = {
+      demographics: null,
+    };
+  }
+
+  componentDidMount () {
+    fetcher.demographics(this.props.root.state.year, this.props.route.countryId).then((res) => {
+      var demographics = {
+        male_total: 0,
+        female_total: 0,
+      };
+      genders.forEach((gender) => { ranges.forEach((range) => { demographics[gender + range] = 0; }); });
+      res.forEach((page) => {
+        page.data.forEach((value) => {
+          demographics.male_total += parseInt(helper.nanFilter(value.male_total_value));
+          demographics.female_total += parseInt(helper.nanFilter(value.female_total_value));
+          genders.forEach((gender) => {
+            ranges.forEach((range) => {
+              demographics[gender + range] += parseInt(helper.nanFilter(value[gender + '_' + range]));
+            });
+          });
+        });
+      });
+      var total = demographics.male_total + demographics.female_total;
+      if (total === 0) {
+        demographics = false;
+      }
+      else {
+        demographics.percentMale = Math.floor((demographics.male_total / total) * 100);
+        demographics.percentFemale = 100 - demographics.percentMale;
+        genders.forEach((gender) => { ranges.forEach((range) => {
+          demographics[gender + range] =
+            ((demographics[gender + range] / demographics[gender + '_total']) * 100).toFixed(1);
+        }); });
+      }
+      this.setState({demographics});
+    }).done();
+  }
+
+  maleTotalText () {
+    var textStyle = [style.demographicsTotalsText, style.textWhite];
+    return (<Text style={textStyle}>Male ({this.state.demographics.percentMale}%)</Text>);
+  }
+
+  femaleTotalText () {
+    var textStyle = [style.demographicsTotalsText, style.textWhite];
+    return (<Text style={textStyle}>Female ({this.state.demographics.percentFemale}%)</Text>);
+  }
+
+  containerStyleMale () {
+    var _style = [style.maleContainer, {flex: this.state.demographics.percentMale}];
+    if (this.state.demographics.percentMale < MIN_PERCENTAGE) { return (<View style={_style}></View>); }
+    return (<View style={_style}><Image source={require('../img/male.png')} />{this.maleTotalText()}</View>);
+  }
+
+  containerStyleFemale () {
+    var _style = [style.femaleContainer, {flex: this.state.demographics.percentFemale}];
+    if (this.state.demographics.percentFemale < MIN_PERCENTAGE) { return (<View style={_style}></View>); }
+    return (<View style={_style}><Image source={require('../img/female.png')} />{this.femaleTotalText()}</View>);
+  }
+
+  smallPercentageLabel () {
+    if (this.state.demographics.percentMale < MIN_PERCENTAGE) {
+      return (<View style={style.maleSmallPercentage}>{this.maleTotalText()}</View>);
+    }
+    else if (this.state.demographics.percentFemale < MIN_PERCENTAGE) {
+      return (<View style={style.femaleSmallPercentage}>{this.femaleTotalText()}</View>);
+    }
   }
 
   render() {
-    if (true) { return this.props.root.renderLoader(); }
+    if (this.state.demographics === null) { return this.props.root.renderLoader(); }
+    if (this.state.demographics === false) { 
+      return (
+        <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
+          <Text>No data</Text>
+        </View>
+      );
+    }
     return (
-      <View></View>
+      <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
+        <View style={{flexDirection: 'row'}}>
+          {this.containerStyleMale()}
+          {this.containerStyleFemale()}
+          {this.smallPercentageLabel()}
+        </View>
+        <View style={style.demographicsStatContainer}>
+          <View>
+            <Text style={style.demographicsStatTitle}>Age</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{flex: 15}}>
+              {ranges.map((val) => {
+                return (
+                  <Text key={'male' + val} style={style.demographicsPercentageText}>
+                    {this.state.demographics['male' + val]}%
+                  </Text>
+                );
+              })}
+            </View>
+            <View style={{flex: 25, alignItems: 'stretch'}}>
+              {ranges.map((val) => {
+                var animation = new Animated.Value(0);
+                var to = Math.floor(this.state.demographics['male' + val]);
+                Animated.timing(animation, {toValue: to}).start();
+                return (
+                  <View key={'m' + val} style={style.barContainer}>
+                    <View style={{backgroundColor: 'white', flex: 100 - to}}></View>
+                    <Animated.View style={[style.maleBar, {flex: animation}]}></Animated.View>
+                  </View>
+                );
+              })}
+            </View>
+            <View style={{flex: 20}}>
+              <Text style={style.demographicsStatLabel}>0-4</Text>
+              <Text style={style.demographicsStatLabel}>5-11</Text>
+              <Text style={style.demographicsStatLabel}>12-17</Text>
+              <Text style={style.demographicsStatLabel}>18-59</Text>
+              <Text style={style.demographicsStatLabel}>60+</Text>
+              <Text style={style.demographicsStatLabel}>N/A</Text>
+            </View>
+            <View style={{flex: 25}}>
+              {ranges.map((val) => {
+                var animation = new Animated.Value(0);
+                var to = Math.floor(this.state.demographics['female' + val]);
+                Animated.timing(animation, {toValue: to}).start();
+                return (
+                  <View key={'f' + val} style={style.barContainer}>
+                    <Animated.View style={[style.femaleBar, {flex: animation}]}></Animated.View>
+                    <View style={{backgroundColor: 'white', flex: 100 - to}}></View>
+                  </View>
+                );
+              })}
+            </View>
+            <View style={{flex: 15, alignItems: 'flex-end'}}>
+              {ranges.map((val) => {
+                return (
+                  <Text key={'female' + val} style={style.demographicsPercentageText}>
+                    {this.state.demographics['female' + val]}%
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+        </View>
+      </View>
     );
   }
 

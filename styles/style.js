@@ -1,12 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 var mainBlue = '#0072BC';
+var lightBlue = '#D6E8F0';
 var shadowButton = '#517889';
 
 var backgroundLight = '#EFF5F9';
 
 var backgroundGrey = '#F2F2F2';
 var textGrey = '#898E91';
+
+var maleColor = '#389DC7';
+
+var femaleColor = '#EF5C86';
 
 var flex = 1;
 
@@ -121,6 +126,11 @@ var style = StyleSheet.create({
     padding: 15,
     fontWeight: 'bold',
     color: 'white'
+  },
+
+  flexRow: {
+    flex,
+    flexDirection: 'row',
   },
 
   /**
@@ -356,6 +366,137 @@ var style = StyleSheet.create({
     alignItems: 'center',
     padding: 4,
   },
+
+  /**
+   * Demographics
+   */
+
+  maleContainer: {
+    height: 145,
+    backgroundColor: maleColor,
+    borderRightWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'white',
+  },
+
+  femaleContainer: {
+    height: 145,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: femaleColor,
+  },
+
+  demographicsTotalsText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  maleSmallPercentage: {
+    backgroundColor: maleColor,
+    padding: 2,
+    paddingRight: 6,
+    shadowColor: 'black',
+    shadowOffset: {width: 2, height: 1},
+    shadowRadius: 1,
+    shadowOpacity: 0.4,
+    position: 'absolute',
+    top: 103,
+    left: 2,
+  },
+
+  femaleSmallPercentage: {
+    backgroundColor: femaleColor,
+    padding: 2,
+    paddingLeft: 6,
+    shadowColor: 'black',
+    shadowOffset: {width: -2, height: 1},
+    shadowRadius: 1,
+    shadowOpacity: 0.4,
+    position: 'absolute',
+    top: 103,
+    right: 2
+  },
+
+  demographicsStatContainer: {
+    backgroundColor: 'white',
+    padding: 10,
+    shadowColor: mainBlue,
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 2,
+    shadowOpacity: 0.4,
+  },
+
+  demographicsStatTitle: {
+    textAlign: 'center',
+    fontSize: 18,
+    paddingBottom: 6,
+    fontWeight: 'bold',
+  },
+
+  demographicsStatLabel: {
+    textAlign: 'center',
+    fontSize: 16,
+    backgroundColor: 'white',
+    margin: 2,
+    fontWeight: 'bold',
+  },
+
+  barContainer: {
+    flex: 1,
+    height: 19.5,
+    marginVertical: 2,
+    flexDirection: 'row'
+  },
+
+  maleBar: {
+    backgroundColor: maleColor,
+  },
+
+  femaleBar: {
+    backgroundColor: femaleColor,
+  },
+
+  demographicsPercentageText: {
+    fontSize: 14,
+    marginVertical: 3.25,
+    color: textGrey,
+  },
+
+  /**
+   * AsylumSeekers
+   */
+
+  asylumSeekersTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  asylumSeekersTitleSmall: {
+    fontSize: 14,
+    color: textGrey,
+  },
+
+  asylumSeekersLine: {
+    height: 1,
+    backgroundColor: lightBlue,
+    marginVertical: 8,
+  },
+
+  asylumSeekersCard: {
+    marginBottom: 6,
+    backgroundColor: 'white',
+    shadowColor: mainBlue,
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 2,
+    shadowOpacity: 0.4,
+    paddingBottom: 6,
+  },
+
+  asylumSeekersPadding: {
+    padding: 6,
+  }
 
 });
 

@@ -9,6 +9,7 @@ import style from '../styles/style';
 import PersonsOfConcernScreen from './PersonsOfConcernScreen';
 import CountriesOfOrigin from './CountriesOfOrigin';
 import DemographicsScreen from './DemographicsScreen';
+import AsylumSeekersScreen from './AsylumSeekersScreen';
 
 var flex = 1;
 
@@ -22,7 +23,9 @@ class CountryPopStatsScreen extends Component {
   }
 
   switchTab (selectedTab) {
-    this.setState({selectedTab});
+    if (this.state.selectedTab !== selectedTab) {
+      this.setState({selectedTab});
+    }
   }
   
   render() {
@@ -34,6 +37,7 @@ class CountryPopStatsScreen extends Component {
           tintColor='#0072BC'
         >
           <TabBarIOS.Item
+            icon={this.state.selectedTab === 1 ? require('../img/menu-poc-active.png') : require('../img/menu-poc.png')}
             selected={this.state.selectedTab === 1}
             onPress={() => this.switchTab(1)}
             title='Persons of concern'
@@ -45,17 +49,19 @@ class CountryPopStatsScreen extends Component {
             />
           </TabBarIOS.Item>
           <TabBarIOS.Item
+            icon={require('../img/menu-asylum.png')}
             selected={this.state.selectedTab === 2}
             onPress={() => this.switchTab(2)}
             title='Asylum seekers'
           >
-            <CountriesOfOrigin
+            <AsylumSeekersScreen
               route={this.props.route}
               nav={this.props.nav}
               root={this.props.root}
             />
           </TabBarIOS.Item>
           <TabBarIOS.Item
+            icon={require('../img/menu-demo.png')}
             selected={this.state.selectedTab === 3}
             onPress={() => this.switchTab(3)}
             title='Demographics'

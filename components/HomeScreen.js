@@ -13,6 +13,7 @@ import {
 
 import style from '../styles/style';
 import CountryListScreen from './CountryListScreen';
+import fetcher from '../library/fetcher';
 
 var flex = 1;
 
@@ -26,6 +27,18 @@ class HomeScreen extends Component {
     this.props.nav.push({component: CountryListScreen, title: 'Select country you wish to view'});
   }
 
+  detectCountry () {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        fetcher.getUserCountry(position.coords.latitude, position.coords.longitude).then((location) => {
+          console.log(location);
+        }).done();
+      },
+      (error) => console.log(error),
+      {timeout: 20000}
+    );
+  }
+
   render() {
     return (
       <View style={style.mainContainer}>
@@ -35,7 +48,7 @@ class HomeScreen extends Component {
             <Text style={style.titleText}>Would you like to view statistics</Text>
             <Text style={style.titleText}>for your current country?</Text>
           </View>
-          <TouchableHighlight style={style.whiteButton}>
+          <TouchableHighlight onPress={this.detectCountry.bind(this)} style={style.whiteButton}>
             <View><Text style={style.whiteButtonText}>Use my current country</Text></View>
           </TouchableHighlight>
           <TouchableHighlight onPress={this.manuallySelectCountry.bind(this)} style={style.blueButton}>

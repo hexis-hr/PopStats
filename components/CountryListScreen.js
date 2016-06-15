@@ -10,9 +10,11 @@ import {
   View,
   TouchableHighlight,
   ListView,
+  AsyncStorage,
 } from 'react-native';
 
 import style from '../styles/style';
+import helper from '../library/helper';
 import CountryPopStatsScreen from './CountryPopStatsScreen';
 import Loader from './Loader';
 
@@ -26,19 +28,21 @@ class CountryListScreen extends Component {
     this.state = {
       countryList: null
     };
+    AsyncStorage.removeItem('RECENT',() => {});
   }
 
   componentDidMount () {
     fetch(POPDATA_ORIGIN_URL).then((res) => res.json()).then((res) => {
-      this.setState({
-        countryList: (new ListView.DataSource({
-          rowHasChanged: (row1, row2) => row1 !== row2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-        })).cloneWithRowsAndSections({
-          'AUTO DETECTED': [{origin_en: "Germany", origin: "DEU"}],
-          RECENT: [{origin_en: "Germany", origin: "DEU"}, {origin_en: "Germany", origin: "DEU"}, {origin_en: "Germany", origin: "DEU"}],
-          ALPHABETICALLY: res,
-        })
+      AsyncStorage.getItem('RECENT', (err, item) => {
+        var dataBlob = { 'AUTO DETECTED': [{origin_en: "Germany", origin: "DEU"}] };
+        if (item) { dataBlob.RECENT = JSON.parse(item); }
+        dataBlob.ALPHABETICALLY = res;
+        this.setState({
+          countryList: (new ListView.DataSource({
+            rowHasChanged: helper.rowHasChanged,
+            sectionHeaderHasChanged: helper.sectionHeaderHasChanged,
+          })).cloneWithRowsAndSections(dataBlob)
+        });
       });
     }).done();
   }
@@ -49,6 +53,13 @@ class CountryListScreen extends Component {
 
   countryInfo (title, countryId) {
     return () => {
+      AsyncStorage.getItem('RECENT', (err, item) => {
+        var recent = [];
+        if (item !== null) { recent = JSON.parse(item); }
+
+        recent.push({origin_en: title, origin: countryId});
+        AsyncStorage.setItem('RECENT', JSON.stringify(recent), (err) => {});
+      });
       this.props.nav.push({component: CountryPopStatsScreen, title, countryId});
     };
   }

@@ -10,6 +10,8 @@ import {
   View,
   Text,
   Navigator,
+  StatusBar,
+  Image,
 } from 'react-native';
 
 import style from './styles/style';
@@ -71,13 +73,17 @@ class PopStats extends Component {
   }
 
   render() {
+
     return (
-      <Navigator
-        style={{flex}}
-        initialRoute={{component: HomeScreen}}
-        renderScene={this.mainNavRenderScene.bind(this)}
-        navigationBar={this.navigationBarRender()}
-      />
+      <View style={{flex}}>
+        <StatusBar barStyle="light-content" />
+        <Navigator
+          style={{flex}}
+          initialRoute={{component: HomeScreen}}
+          renderScene={this.mainNavRenderScene.bind(this)}
+          navigationBar={this.navigationBarRender()}
+        />
+      </View>
     );
   }
 
