@@ -20,6 +20,7 @@ import YearNavigator from './YearNavigator';
 
 const TOTAL = 0;
 const ALPHABETICALLY = 1;
+
 var flex = 1;
 
 var sortByTotal = (a, b) => {
@@ -94,16 +95,20 @@ class CountriesOfOrigin extends Component {
       <View style={{flex}}>
         <View style={{flex, flexDirection: 'row'}}>
           <Text style={[style.countriesOfOriginTotalText, {flex}]}>{row.country_of_origin_en}</Text>
-          <Text style={style.countriesOfOriginTotalText}>{row.total_population}</Text>
+          <Text style={style.countriesOfOriginTotalText}>{helper.formatNumber(row.total_population)}</Text>
         </View>
-        <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.countriesOfOriginText, {flex}]}>Refugees</Text>
-          <Text style={style.countriesOfOriginText}>{row.refugees}</Text>
-        </View>
-        <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.countriesOfOriginText, {flex}]}>Asylum seekers</Text>
-          <Text style={style.countriesOfOriginText}>{row.asylum_seekers}</Text>
-        </View>
+        {
+          Object.keys(helper.personsOfConcernKeys).map(function(value) {
+            if (row[helper.personsOfConcernKeys[value]]) {
+              return (
+                <View key={helper.personsOfConcernKeys[value] + row.country_of_origin} style={{flex, flexDirection: 'row'}}>
+                  <Text style={[style.stackList_item_body, {flex}]}>{value}</Text>
+                  <Text style={[style.stackList_item_body]}>{helper.formatNumber(row[helper.personsOfConcernKeys[value]])}</Text>
+                </View>
+              );
+            }
+          })
+        }
       </View>
     );
   }

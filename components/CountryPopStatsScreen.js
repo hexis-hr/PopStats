@@ -37,7 +37,11 @@ class CountryPopStatsScreen extends Component {
           tintColor='#0072BC'
         >
           <TabBarIOS.Item
-            icon={this.state.selectedTab === 1 ? require('../img/menu-poc-active.png') : require('../img/menu-poc.png')}
+            icon={
+              this.state.selectedTab === 1 ?
+              require('../img/tabs/menu-poc-active.png') :
+              require('../img/tabs/menu-poc.png')
+            }
             selected={this.state.selectedTab === 1}
             onPress={() => this.switchTab(1)}
             title='Persons of concern'
@@ -49,7 +53,7 @@ class CountryPopStatsScreen extends Component {
             />
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            icon={require('../img/menu-asylum.png')}
+            icon={require('../img/tabs/menu-asylum.png')}
             selected={this.state.selectedTab === 2}
             onPress={() => this.switchTab(2)}
             title='Asylum seekers'
@@ -61,7 +65,7 @@ class CountryPopStatsScreen extends Component {
             />
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            icon={require('../img/menu-demo.png')}
+            icon={require('../img/tabs/menu-demo.png')}
             selected={this.state.selectedTab === 3}
             onPress={() => this.switchTab(3)}
             title='Demographics'
