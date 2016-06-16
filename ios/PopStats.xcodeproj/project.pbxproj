@@ -21,6 +21,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		4711C3F21D11622800BA1F87 /* startup-iphone6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4711C3F11D11622800BA1F87 /* startup-iphone6.png */; };
 		475325231D0DF12F007C0A34 /* ABNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475324F91D0DF12F007C0A34 /* ABNumberFormatter.swift */; };
 		475325241D0DF12F007C0A34 /* BarLineChartViewBaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475324FA1D0DF12F007C0A34 /* BarLineChartViewBaseExtension.swift */; };
 		475325251D0DF12F007C0A34 /* chartDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475324FB1D0DF12F007C0A34 /* chartDataHelpers.swift */; };
@@ -162,6 +163,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		230C901C617893DA4715EB1E /* Pods-PopStatsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopStatsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopStatsTests/Pods-PopStatsTests.release.xcconfig"; sourceTree = "<group>"; };
 		281CC2F505DE5863330CCFB0 /* Pods_PopStatsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopStatsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4711C3F11D11622800BA1F87 /* startup-iphone6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "startup-iphone6.png"; path = "../img/startup-screen/startup-iphone6.png"; sourceTree = "<group>"; };
 		475324F81D0DF12E007C0A34 /* PopStats-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PopStats-Bridging-Header.h"; sourceTree = "<group>"; };
 		475324F91D0DF12F007C0A34 /* ABNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ABNumberFormatter.swift; path = "../node_modules/react-native-ios-charts/RNiOSCharts/ABNumberFormatter.swift"; sourceTree = "<group>"; };
 		475324FA1D0DF12F007C0A34 /* BarLineChartViewBaseExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BarLineChartViewBaseExtension.swift; path = "../node_modules/react-native-ios-charts/RNiOSCharts/BarLineChartViewBaseExtension.swift"; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 		13B07FAE1A68108700A75B9A /* PopStats */ = {
 			isa = PBXGroup;
 			children = (
+				4711C3F11D11622800BA1F87 /* startup-iphone6.png */,
 				47D89D901D09FA0C00E8485E /* Default-568h@2x.png.png */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -671,6 +674,7 @@
 				47D89D911D09FA0C00E8485E /* Default-568h@2x.png.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				4711C3F21D11622800BA1F87 /* startup-iphone6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

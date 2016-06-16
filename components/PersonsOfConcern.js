@@ -28,8 +28,15 @@ var coo = '&coo=AFG&coo=ALB&coo=DZA&coo=AND&coo=AGO&coo=AIA&coo=ATG&coo=ARG&coo=
 var page = '&page=';
 
 const RESULTS_PER_PAGE = 50;
-
 var flex = 1;
+var dataKeys = {
+  'Refugess': 'refugees',
+  'Asylum-seekers': 'asylum_seekers',
+  'IDP\'s': 'idps',
+  'Returnees': 'returnees',
+  'Stateless persons': 'stateless_persons',
+  'Others': 'others_of_concern',
+};
 
 class PersonsOfConcern extends Component {
 
@@ -226,7 +233,7 @@ class PersonsOfConcern extends Component {
       <View style={{flex, flexDirection: 'row', alignItems: 'center'}}>
         <View style={[style.statisticsLegendCircle, {backgroundColor: row.color, borderColor: row.color}]}></View>
         <Text style={[style.statisticsLegendText, {flex}]}>{key}</Text>
-        <Text style={style.statisticsLegendText}>{row.value}</Text>
+        <Text style={style.statisticsLegendText}>{helper.formatNumber(row.value)}</Text>
       </View>
     );
   }
@@ -240,16 +247,20 @@ class PersonsOfConcern extends Component {
       <View style={[style.stackList_item]}>
         <View style={{flex, flexDirection: 'row'}}>
           <Text style={[style.stackList_item_title, {flex}]}>{row.country_of_origin_en}</Text>
-          <Text style={[style.stackList_item_title]}>{row.total_population}</Text>
+          <Text style={[style.stackList_item_title]}>{helper.formatNumber(row.total_population)}</Text>
         </View>
-        <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.stackList_item_body, {flex}]}>Refugees</Text>
-          <Text style={[style.stackList_item_body]}>{row.refugees}</Text>
-        </View>
-        <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.stackList_item_body, {flex}]}>Asylum seekers</Text>
-          <Text style={[style.stackList_item_body]}>{row.asylum_seekers}</Text>
-        </View>
+        {
+          Object.keys(helper.personsOfConcernKeys).map(function(value) {
+            if (row[helper.personsOfConcernKeys[value]]) {
+              return (
+                <View key={helper.personsOfConcernKeys[value] + row.country_of_origin} style={{flex, flexDirection: 'row'}}>
+                  <Text style={[style.stackList_item_body, {flex}]}>{value}</Text>
+                  <Text style={[style.stackList_item_body]}>{helper.formatNumber(row[helper.personsOfConcernKeys[value]])}</Text>
+                </View>
+              );
+            }
+          })
+        }
       </View>
     );
   }
@@ -262,7 +273,7 @@ class PersonsOfConcern extends Component {
     return (
       <View style={{flex, flexDirection: 'row'}}>
         <Text style={[style.countriesOfOriginText, {flex}]}>{row.country_of_origin_en}</Text>
-        <Text style={style.countriesOfOriginText}>{row.value}</Text>
+        <Text style={style.countriesOfOriginText}>{helper.formatNumber(row.value)}</Text>
       </View>
     );
   }
@@ -277,7 +288,7 @@ class PersonsOfConcern extends Component {
               <Text style={style.card_header_title}>Persons of concern</Text>
               <Text style={style.card_header_subtitle}>Total persons of concern</Text>
             </View>
-            <Text style={style.card_header_value}>{this.state.personsOfConcernTotal}</Text>
+            <Text style={style.card_header_value}>{helper.formatNumber(this.state.personsOfConcernTotal)}</Text>
           </View>
           <View style={style.statisticsBody}>
             <PieChart config={this.state.personsOfConcernChart} style={style.statisticsChart}/>
@@ -331,7 +342,7 @@ class PersonsOfConcern extends Component {
               <Text style={style.card_header_title}>Resettlement</Text>
               <Text style={style.card_header_subtitle}>Total persons resettled</Text>
             </View>
-            <Text style={style.card_header_value}>{this.state.resettlementTotal}</Text>
+            <Text style={style.card_header_value}>{helper.formatNumber(this.state.resettlementTotal)}</Text>
           </View>
           <View style={style.statisticsBody}>
             <ListView

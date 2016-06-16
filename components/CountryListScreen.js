@@ -20,6 +20,7 @@ import Loader from './Loader';
 
 var flex = 1;
 const POPDATA_ORIGIN_URL = 'http://popdata.unhcr.org/api/stats/origin.json';
+const RECENT_KEY = 'RECENT';
 
 class CountryListScreen extends Component {
 
@@ -28,13 +29,14 @@ class CountryListScreen extends Component {
     this.state = {
       countryList: null
     };
-    AsyncStorage.removeItem('RECENT',() => {});
+    //AsyncStorage.removeItem('RECENT',() => {});
   }
 
   componentDidMount () {
     fetch(POPDATA_ORIGIN_URL).then((res) => res.json()).then((res) => {
-      AsyncStorage.getItem('RECENT', (err, item) => {
-        var dataBlob = { 'AUTO DETECTED': [{origin_en: "Germany", origin: "DEU"}] };
+      AsyncStorage.getItem(RECENT_KEY, (err, item) => {
+        var dataBlob = {};
+        //var dataBlob = { 'AUTO DETECTED': [{origin_en: "Germany", origin: "DEU"}] };
         if (item) { dataBlob.RECENT = JSON.parse(item); }
         dataBlob.ALPHABETICALLY = res;
         this.setState({
@@ -53,12 +55,14 @@ class CountryListScreen extends Component {
 
   countryInfo (title, countryId) {
     return () => {
-      AsyncStorage.getItem('RECENT', (err, item) => {
+      AsyncStorage.getItem(RECENT_KEY, (err, item) => {
         var recent = [];
         if (item !== null) { recent = JSON.parse(item); }
-
-        recent.push({origin_en: title, origin: countryId});
-        AsyncStorage.setItem('RECENT', JSON.stringify(recent), (err) => {});
+        if (typeof recent.find((val) => { return val.origin === countryId; }) === 'undefined') {
+          recent.push({origin_en: title, origin: countryId});
+        }
+        while (recent.length > 3) { recent.shift(); }
+        AsyncStorage.setItem(RECENT_KEY, JSON.stringify(recent), (err) => {});
       });
       this.props.nav.push({component: CountryPopStatsScreen, title, countryId});
     };

@@ -20,6 +20,18 @@ import helper from '../library/helper';
 import YearNavigator from './YearNavigator';
 
 var flex = 1;
+var dataToIncrement = [
+  'applied_during_year',
+  'decisions_other',
+  'decisions_recognized',
+  'otherwise_closed',
+  'pending_end_of_year_of_which_unhcr_assisted',
+  'pending_end_of_year_total_persons',
+  'pending_start_of_year_of_which_unhcr_assisted',
+  'pending_start_of_year_total_persons',
+  'rejected',
+  'total_decisions',
+];
 
 class AsylumSeekers extends Component {
 
@@ -35,8 +47,16 @@ class AsylumSeekers extends Component {
     fetcher.asylumSeekers(this.props.root.state.year, this.props.route.countryId).then((res) => {
       res.forEach((page) => {
         page.data.forEach((value) => {
-          if (value.rsd_procedure === 'G / NA') {
-            asylumSeekers.push(value);
+          if (typeof asylumSeekers[value.country_of_origin] === 'undefined') {
+            asylumSeekers[value.country_of_origin] = {};
+            asylumSeekers[value.country_of_origin].country_of_origin_en = value.country_of_origin_en;
+            dataToIncrement.map((key) => {
+              asylumSeekers[value.country_of_origin][key] = helper.nanFilter(value[key]);
+            });
+          } else {
+            dataToIncrement.map((key) => {
+              asylumSeekers[value.country_of_origin][key] += helper.nanFilter(value[key]);
+            });
           }
         });
       });
@@ -63,45 +83,63 @@ class AsylumSeekers extends Component {
         <View style={[style.stackList_item, style.stackList_itemPadding]}>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_title, {flex}]}>Total persons start-year</Text>
-            <Text style={[style.stackList_item_body]}>{row.pending_start_of_year_total_persons}</Text>
+            <Text style={[style.stackList_item_body]}>
+              {helper.formatNumber(row.pending_start_of_year_total_persons)}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_body, {flex}]}>Of which UNHCR assisted</Text>
-            <Text style={style.stackList_item_body}>{row.pending_start_of_year_of_which_unhcr_assisted}</Text>
+            <Text style={style.stackList_item_body}>
+              {helper.formatNumber(row.pending_start_of_year_of_which_unhcr_assisted)}
+            </Text>
           </View>
         </View>
 
         <View style={[style.stackList_item, style.stackList_itemPadding]}>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_title, {flex}]}>Applied during year</Text>
-            <Text style={[style.stackList_item_title]}>{row.applied_during_year}</Text>
+            <Text style={[style.stackList_item_title]}>
+              {helper.formatNumber(row.applied_during_year)}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_body, {flex}]}>Recognized</Text>
-            <Text style={[style.stackList_item_body]}>{row.decisions_recognized}</Text>
+            <Text style={[style.stackList_item_body]}>
+              {helper.formatNumber(row.decisions_recognized)}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_body, {flex}]}>Rejected</Text>
-            <Text style={[style.stackList_item_body]}>{row.rejected}</Text>
+            <Text style={[style.stackList_item_body]}>
+              {helper.formatNumber(row.rejected)}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_body, {flex}]}>Otherwise closed</Text>
-            <Text style={style.stackList_item_body}>{row.otherwise_closed}</Text>
+            <Text style={style.stackList_item_body}>
+              {helper.formatNumber(row.otherwise_closed)}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_body, {flex}]}>Other</Text>
-            <Text style={style.stackList_item_body}>{row.decisions_other}</Text>
+            <Text style={style.stackList_item_body}>
+              {helper.formatNumber(row.decisions_other)}
+            </Text>
           </View>
         </View>
 
         <View style={[style.stackList_item, style.stackList_itemPadding, style.stackList_itemLast]}>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_title, {flex}]}>Total persons end-year</Text>
-            <Text style={style.stackList_item_title}>{row.pending_end_of_year_total_persons}</Text>
+            <Text style={style.stackList_item_title}>
+              {helper.formatNumber(row.pending_end_of_year_total_persons)}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[style.stackList_item_body, {flex}]}>Of which UNHCR assisted</Text>
-            <Text style={style.stackList_item_body}>{row.pending_end_of_year_of_which_unhcr_assisted}</Text>
+            <Text style={style.stackList_item_body}>
+              {helper.formatNumber(row.pending_end_of_year_of_which_unhcr_assisted)}
+            </Text>
           </View>
         </View>
       </View>
@@ -110,7 +148,8 @@ class AsylumSeekers extends Component {
 
   render() {
     if (this.state.asylumSeekers === null) { return this.props.root.renderLoader(); }
-    if (this.state.asylumSeekers._dataBlob.s1.length === 0) { return (
+    if (Object.keys(this.state.asylumSeekers._dataBlob.s1).length === 0) {
+      return (
         <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
           <Text>No data</Text>
         </View>

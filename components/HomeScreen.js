@@ -9,6 +9,7 @@ import {
   Text,
   View,
   TouchableHighlight,
+  Image,
 } from 'react-native';
 
 import style from '../styles/style';
@@ -42,7 +43,11 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={style.mainContainer}>
-        <View style={{flex}}></View>
+        <View style={{flex, alignItems: 'center', justifyContent: 'center'}}>
+          <Image
+            source={require('../img/home-logo.png')}
+          />
+        </View>
         <View>
           <View style={style.titleContainer}>
             <Text style={style.titleText}>Would you like to view statistics</Text>
