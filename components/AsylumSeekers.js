@@ -157,12 +157,11 @@ class AsylumSeekers extends Component {
     }
     return (
       <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
-        <View style={style.asylumSeekersPadding}>
+        <View style={[style.card_header, style.card_headerNoBorder]}>
           <View style={{flex}}>
-            <Text style={style.asylumSeekersTitle}>Refugee status determination</Text>
-            <Text style={style.stackList_item_title}>Progress of asylum-seekers</Text>
+            <Text style={style.card_header_title}>Refugee status determination</Text>
+            <Text style={style.card_header_subtitle}>Progress of asylum-seekers</Text>
           </View>
-          <View style={style.asylumSeekersLine}/>
         </View>
         <ListView
           enableEmptySections={true}

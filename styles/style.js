@@ -99,12 +99,21 @@ var style = StyleSheet.create({
 
 
     card_header: {
-      flex: 1,
       flexDirection: 'row',
       padding: 11,
       paddingTop: 10,
       borderBottomWidth: 1,
       borderBottomColor: '#DFEAF2',
+    },
+
+
+    card_headerNoPadding: {
+      paddingHorizontal: 0,
+    },
+
+
+    card_headerNoBorder: {
+      borderBottomWidth: 0,
     },
 
 
@@ -178,6 +187,11 @@ var style = StyleSheet.create({
       },
 
 
+    stackList_itemNoBorder: {
+      borderBottomWidth: 0,
+    },
+
+
     stackList_itemPadding: {
       paddingHorizontal: 12,
     },
@@ -230,6 +244,16 @@ var style = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     textAlign: 'center',
+  },
+
+  transparentButton: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#7998AC',
+    padding: 14,
+    borderWidth: 1,
+    backgroundColor: '#DDE6ED',
+    borderRadius: 2,
   },
 
   titleContainer: {
@@ -290,7 +314,8 @@ var style = StyleSheet.create({
   listHeadingText: {
     color: textGrey,
     fontSize: 15,
-    padding: 12.5,
+    fontWeight: '500',
+    padding: 13,
   },
 
   listRowContainer: {
@@ -305,8 +330,8 @@ var style = StyleSheet.create({
   listRowText: {
     color: mainBlue,
     fontSize: 17,
-    padding: 13.5,
-    fontWeight: '600',
+    padding: 12,
+    fontWeight: '400',
     flex: 1,
   },
 
@@ -520,7 +545,7 @@ var style = StyleSheet.create({
   maleContainer: {
     height: 145,
     backgroundColor: maleColor,
-    borderRightWidth: 3,
+    borderRightWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'white',
@@ -534,8 +559,9 @@ var style = StyleSheet.create({
   },
 
   demographicsTotalsText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    marginTop: 8,
+    fontSize: 16,
+    fontWeight: '500',
     textAlign: 'center',
   },
 

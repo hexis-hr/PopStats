@@ -25,7 +25,7 @@ class HomeScreen extends Component {
   }
 
   manuallySelectCountry () {
-    this.props.nav.push({component: CountryListScreen, title: 'Select country you wish to view'});
+    this.props.nav.push({component: CountryListScreen, title: 'Select a country'});
   }
 
   detectCountry () {

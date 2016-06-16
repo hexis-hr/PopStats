@@ -92,10 +92,10 @@ class CountriesOfOrigin extends Component {
 
   renderRow (row) {
     return (
-      <View style={{flex}}>
+      <View style={[style.stackList_item, style.stackList_itemNoBorder]}>
         <View style={{flex, flexDirection: 'row'}}>
-          <Text style={[style.countriesOfOriginTotalText, {flex}]}>{row.country_of_origin_en}</Text>
-          <Text style={style.countriesOfOriginTotalText}>{helper.formatNumber(row.total_population)}</Text>
+          <Text style={[style.stackList_item_title, {flex}]}>{row.country_of_origin_en}</Text>
+          <Text style={[style.stackList_item_title]}>{helper.formatNumber(row.total_population)}</Text>
         </View>
         {
           Object.keys(helper.personsOfConcernKeys).map(function(value) {
@@ -135,10 +135,10 @@ class CountriesOfOrigin extends Component {
     if (this.state.countriesOfOrigin === null) { return this.props.root.renderLoader(); }
     return (
       <View style={[{flex}, style.mainContainerWithNestedNavigationBar, style.countriesOfOriginContainer]}>
-        <View style={style.countriesOfOriginHeader}>
+        <View style={[style.card_header, style.card_headerNoPadding]}>
           <View style={{flex}}>
-            <Text style={style.statisticsBlockHeaderMainTitle}>Countries of origin</Text>
-            <Text style={style.statisticsBlockHeaderMiniTitle}>Total persons per country of origin</Text>
+            <Text style={style.card_header_title}>Countries of origin</Text>
+            <Text style={style.card_header_subtitle}>Total persons per country of origin</Text>
           </View>
         </View>
         <View style={style.sortSwitchContainer}>

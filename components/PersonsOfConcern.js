@@ -244,7 +244,7 @@ class PersonsOfConcern extends Component {
 
   renderRowTopCountriesOfOrigin (row, section, key) {
     return (
-      <View style={[style.stackList_item]}>
+      <View style={[style.stackList_item, style.stackList_itemNoBorder]}>
         <View style={{flex, flexDirection: 'row'}}>
           <Text style={[style.stackList_item_title, {flex}]}>{row.country_of_origin_en}</Text>
           <Text style={[style.stackList_item_title]}>{helper.formatNumber(row.total_population)}</Text>
