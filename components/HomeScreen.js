@@ -50,8 +50,9 @@ class HomeScreen extends Component {
         </View>
         <View>
           <View style={style.titleContainer}>
-            <Text style={style.titleText}>Would you like to view statistics</Text>
-            <Text style={style.titleText}>for your country?</Text>
+            <Text style={style.titleText}>
+              Please select a country of origin/asylum
+            </Text>
           </View>
           <TouchableHighlight onPress={this.manuallySelectCountry.bind(this)} style={style.blueButton}>
             <View><Text style={style.blueButtonText}>Select a country</Text></View>

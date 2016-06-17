@@ -263,10 +263,11 @@ var style = StyleSheet.create({
   },
 
   titleText: {
+    paddingHorizontal: 30,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 19,
     color: 'white',
-    fontWeight: '200',
+    fontWeight: '300',
   },
 
   /**
