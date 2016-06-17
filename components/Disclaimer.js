@@ -47,6 +47,23 @@ class Disclaimer extends Component {
             <View>
               <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'center'}}>Disclaimer</Text>
             </View>
+            <View style={{paddingHorizontal: 20, paddingTop: 20}}>
+              <Text style={style.disclaimer_text}>Author of this mobile application is Hexis j.d.o.o..{'\n'}</Text>
+              <Text style={style.disclaimer_text}>
+                All of the data used in this mobile application is property of United Nations High Commissioner
+                for Refugees, and is publicly available on popstats.unhcr.org.{'\n'}
+              </Text>
+              <Text style={style.disclaimer_text}>
+                Hexis j.d.o.o. is not responsible for authenticity and veracity of the data.{'\n'}
+              </Text>
+              <Text style={style.disclaimer_text}>
+                For all information and inquiries related to population statistics please visit popstats.unhrcr.org.
+                {'\n'}
+              </Text>
+              <Text style={style.disclaimer_text}>
+                Developed by Hexis j.d.o.o., for more details please visit www.hexis.hr.{'\n'}
+              </Text>
+            </View>
           </View>
         </Modal>
         <TouchableHighlight

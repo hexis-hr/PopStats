@@ -664,9 +664,19 @@ var style = StyleSheet.create({
         },
 
 
+  /**
+   * Disclaimer
+   */
 
+  disclaimer_text: {
+    fontSize: 16,
+    color: '#565656',
+  },
 
-
+  disclaimer_text_link: {
+    fontSize: 16,
+    color: mainBlue,
+  },
 
   /**
    * AsylumSeekers
