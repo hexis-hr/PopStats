@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import style from './styles/style';
+import fetcher from './library/fetcher';
 import Loader from './components/Loader';
 import HomeScreen from './components/HomeScreen';
 import NavigatorButton from './components/NavigatorButton';
@@ -29,6 +30,7 @@ class PopStats extends Component {
 
     this.state = {
       year: DEFAULT_YEAR,
+      availableYears: [],
     };
 
     var LeftButtonPress = (nav) => { nav.pop(); };
@@ -63,6 +65,15 @@ class PopStats extends Component {
     this.navigationBar = {LeftButton, RightButton, Title};
   }
 
+  componentDidMount () {
+    fetcher.availableYears().then((res) => {
+      this.state.availableYears = res;
+      this.state.year = res[res.length - 1];
+      this.state.maxYear = this.state.year;
+      this.state.minYear = res[0];
+    }).done();
+  }
+  
   mainNavRenderScene (route, nav) {
     return React.createElement(route.component, {route, nav, root: this});
   }
@@ -75,6 +86,16 @@ class PopStats extends Component {
     return (
       <View style={style.mainNavBarButton}>
         <Loader color='#0072BC' />
+      </View>
+    );
+  }
+
+  renderNoData () {
+    return (
+      <View
+        style={[{flex, alignItems: 'center', justifyContent: 'center'}, style.mainContainerWithNestedNavigationBar]}
+      >
+        <Text style={{fontSize: 18}}>No data available</Text>
       </View>
     );
   }

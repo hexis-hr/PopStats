@@ -3,6 +3,7 @@ import helper from '../library/helper';
 const PERSONS_OF_CONCERN_URL = 'http://api.hexis.hr/popstats/persons_of_concern';
 const DEMOGRAPHICS_URL = 'http://api.hexis.hr/popstats/demographics';
 const ASYLUM_SEEKERS_URL = 'http://api.hexis.hr/popstats/asylum_seekers';
+const YEARS_URL = 'http://api.hexis.hr/popstats/available_years';
 
 var fetcher = {
 
@@ -57,6 +58,12 @@ var fetcher = {
       }).done();
     });
   },
+
+  availableYears: () => {
+    return new Promise((resolve, reject) => {
+      fetch(YEARS_URL).then((res) => res.json()).then((res) => { resolve(res); }).done();
+    });
+  }
 
 };
 
