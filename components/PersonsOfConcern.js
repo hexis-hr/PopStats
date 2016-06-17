@@ -111,6 +111,7 @@ class PersonsOfConcern extends Component {
           }],
           backgroundColor: 'transparent',
           showLegend: false,
+          userInteractionEnabled: false,
         };
 
         var rowHasChanged = (row1, row2) => row1 !== row2;
