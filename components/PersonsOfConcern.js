@@ -61,7 +61,7 @@ class PersonsOfConcern extends Component {
     };
 
     var url =
-      PERSONS_OF_CONCERN_URL + '/year/' + this.props.nestedRoute.year + '/country/' + this.props.route.countryId;
+      PERSONS_OF_CONCERN_URL + '/year/' + this.props.root.state.year + '/country/' + this.props.route.countryId;
 
     fetch(url).then((res) => res.json()).then((res) => {
 
@@ -240,6 +240,7 @@ class PersonsOfConcern extends Component {
 
   render() {
     if (this.state.resettlement === null) { return this.props.root.renderLoader(); }
+    if (this.state.personsOfConcernTotal < 1) { return this.props.root.renderNoData(); }
     return (
       <ScrollView style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
         <View style={[style.card, style.cardMargin]}>

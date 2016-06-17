@@ -150,11 +150,7 @@ class AsylumSeekers extends Component {
   render() {
     if (this.state.asylumSeekers === null) { return this.props.root.renderLoader(); }
     if (Object.keys(this.state.asylumSeekers._dataBlob.s1).length === 0) {
-      return (
-        <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
-          <Text>No data</Text>
-        </View>
-      );
+      return this.props.root.renderNoData();
     }
     return (
       <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>

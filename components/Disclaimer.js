@@ -7,9 +7,11 @@ import {
   ListView,
   TouchableHighlight,
   Modal,
+  Linking,
 } from 'react-native';
 
 import style from '../styles/style';
+import helper from '../library/helper';
 
 var flex = 1;
 
@@ -55,8 +57,15 @@ class Disclaimer extends Component {
         >
           <Text style={style.transparentButton}>Disclaimer</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={{flex, margin: 8}}>
-          <Text style={style.transparentButton}>Made by Hexis</Text>
+        <TouchableHighlight
+          style={{flex, margin: 8}}
+          onPress={() => {
+            Linking.openURL(helper.getHexisLink());
+          }}
+        >
+          <Text
+            style={style.transparentButton}
+          >Made by Hexis</Text>
         </TouchableHighlight>
       </View>
     );

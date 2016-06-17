@@ -102,13 +102,7 @@ class Demographics extends Component {
 
   render() {
     if (this.state.demographics === null) { return this.props.root.renderLoader(); }
-    if (this.state.demographics === false) {
-      return (
-        <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
-          <Text>No data</Text>
-        </View>
-      );
-    }
+    if (this.state.demographics === false) { return this.props.root.renderNoData(); }
     return (
       <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
         <View style={{flexDirection: 'row'}}>

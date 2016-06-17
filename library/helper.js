@@ -22,6 +22,10 @@ var helper = {
     'Others': 'others_of_concern',
   },
 
+  getHexisLink: () => {
+    return 'http://hexis.hr/en/';
+  }
+
 };
 
 module.exports = helper;
