@@ -35,7 +35,14 @@ class PopStats extends Component {
     var RightButtonPress = (nav, index) => { nav.push({title: null, text: 'New page'}); };
 
     var LeftButton = (route, nav, index, navState) => {
-      if (index > 0) { return (<NavigatorButton onPress={() => LeftButtonPress(nav)} title={'<'}/>); }
+      if (index > 0) {
+        return (
+          <NavigatorButton
+            onPress={() => LeftButtonPress(nav)}
+            leftImage={require('./img/navigation/backArrow.png')}
+          />
+        );
+      }
     };
 
     var RightButton = (route, nav, index, navState) => {

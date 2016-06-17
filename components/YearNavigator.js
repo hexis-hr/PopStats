@@ -31,7 +31,7 @@ class YearNavigator extends Component {
           <NavigatorButton
             textStyle={style.nestedNavButtonText}
             buttonStyle={style.nestedNavButton}
-            title={'<'}
+            leftImage={require('../img/navigation/arrowLeft.png')}
             onPress={() => LeftButtonPress(nav)}
           />
         );
@@ -44,7 +44,7 @@ class YearNavigator extends Component {
           <NavigatorButton
             textStyle={style.nestedNavButtonText}
             buttonStyle={style.nestedNavButton}
-            title={'>'}
+            rightImage={require('../img/navigation/arrowRight.png')}
             onPress={() => { RightButtonPress(nav); }}
           />
         );

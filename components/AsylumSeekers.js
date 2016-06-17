@@ -18,6 +18,7 @@ import style from '../styles/style';
 import fetcher from '../library/fetcher';
 import helper from '../library/helper';
 import YearNavigator from './YearNavigator';
+import Disclaimer from './Disclaimer';
 
 var flex = 1;
 var dataToIncrement = [
@@ -168,6 +169,7 @@ class AsylumSeekers extends Component {
           style={style.asylumSeekersPadding}
           dataSource={this.state.asylumSeekers}
           renderRow={this.renderRow.bind(this)}
+          renderFooter={() => { return <Disclaimer />;}}
         />
       </View>
     );
