@@ -23,7 +23,7 @@ var helper = {
   },
 
   getHexisLink: () => {
-    return 'http://hexis.hr/en/';
+    return 'http://hexis.hr/en/?ref=popstats';
   }
 
 };
