@@ -11,6 +11,7 @@ import {
   TouchableHighlight,
   ListView,
   AsyncStorage,
+  Image,
 } from 'react-native';
 
 import style from '../styles/style';
@@ -19,7 +20,8 @@ import CountryPopStatsScreen from './CountryPopStatsScreen';
 import Loader from './Loader';
 
 var flex = 1;
-const POPDATA_ORIGIN_URL = 'http://popdata.unhcr.org/api/stats/origin.json';
+//const POPDATA_ORIGIN_URL = 'http://popdata.unhcr.org/api/stats/origin.json';
+const POPDATA_ORIGIN_URL = 'http://api.hexis.hr/popstats/countries';
 const RECENT_KEY = 'RECENT';
 
 class CountryListScreen extends Component {
@@ -76,7 +78,10 @@ class CountryListScreen extends Component {
       >
         <View style={style.listRowContainer}>
           <Text style={style.listRowText}>{data.origin_en}</Text>
-          <Text style={style.listRowGte}>{'>'}</Text>
+          <Image
+            style={{alignSelf: 'center', marginRight: 8}}
+            source={require('../img/navigation/arrowRight.png')}
+          />
         </View>
       </TouchableHighlight>
     );

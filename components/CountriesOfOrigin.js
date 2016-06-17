@@ -17,6 +17,7 @@ import style from '../styles/style';
 import fetcher from '../library/fetcher';
 import helper from '../library/helper';
 import YearNavigator from './YearNavigator';
+import Disclaimer from './Disclaimer';
 
 const TOTAL = 0;
 const ALPHABETICALLY = 1;
@@ -160,6 +161,7 @@ class CountriesOfOrigin extends Component {
           dataSource={this.state.countriesOfOrigin}
           renderSeparator={this.renderSeparator}
           renderRow={this.renderRow}
+          renderFooter={() => { return <Disclaimer />; }}
         />
       </View>
     );

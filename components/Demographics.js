@@ -19,6 +19,7 @@ import style from '../styles/style';
 import fetcher from '../library/fetcher';
 import helper from '../library/helper';
 import YearNavigator from './YearNavigator';
+import Disclaimer from './Disclaimer';
 
 const MIN_PERCENTAGE = 25;
 var flex = 1;
@@ -188,6 +189,7 @@ class Demographics extends Component {
             </View>
           </View>
         </View>
+        <Disclaimer />
       </View>
     );
   }

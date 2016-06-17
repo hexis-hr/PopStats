@@ -250,10 +250,12 @@ var style = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     color: '#7998AC',
+    borderColor: '#7998AC',
     padding: 14,
     borderWidth: 1,
     backgroundColor: '#DDE6ED',
     borderRadius: 2,
+    textAlign: 'center'
   },
 
   titleContainer: {
@@ -365,7 +367,7 @@ var style = StyleSheet.create({
   },
 
   nestedNavButton: {
-    paddingHorizontal: 6,
+    paddingHorizontal: 8,
   },
 
   nestedNavButtonText: {
