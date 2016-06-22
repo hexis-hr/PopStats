@@ -7,46 +7,123 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
+  View,
   Text,
-  View
+  Navigator,
+  StatusBar,
+  Image,
+  Platform,
+  Alert,
 } from 'react-native';
 
+import style from './styles/style';
+import fetcher from './library/fetcher';
+import helper from './library/helper';
+import Loader from './components/Loader';
+import HomeScreen from './components/HomeScreen';
+import NavigatorButton from './components/NavigatorButton';
+
+var flex = 1;
+const DEFAULT_YEAR = 2014;
+
 class PopStats extends Component {
-  render() {
+
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      year: DEFAULT_YEAR,
+      availableYears: [],
+    };
+
+    var LeftButtonPress = (nav) => { nav.pop(); };
+    var RightButtonPress = (nav, index) => { nav.push({title: null, text: 'New page'}); };
+
+    var LeftButton = (route, nav, index, navState) => {
+      if (index > 0) {
+        return (
+          <NavigatorButton
+            onPress={() => LeftButtonPress(nav)}
+            leftImage={require('./img/navigation/backArrow.png')}
+          />
+        );
+      }
+    };
+
+    var RightButton = (route, nav, index, navState) => {
+      return null;
+      if (index > 0) { return (<NavigatorButton onPress={() => RightButtonPress(nav, index)} title={'>'}/>); }
+    };
+
+    var Title = (route, nav, index, navState) => {
+      if (index > 0) {
+        return (
+          <View style={style.mainNavBarButton}>
+            <Text style={style.mainNavBarTitleText}>{route.title ? route.title : ''}</Text>
+          </View>
+        );
+      }
+    };
+
+    this.navigationBar = {LeftButton, RightButton, Title};
+  }
+
+  componentDidMount () {
+    fetcher.availableYears().then((res) => {
+      this.state.availableYears = res;
+      this.state.year = res[res.length - 1];
+      this.state.maxYear = this.state.year;
+      this.state.minYear = res[0];
+    }).catch(() => { helper.alertNetworkError(); }).done();
+  }
+
+  mainNavRenderScene (route, nav) {
+    return React.createElement(route.component, {route, nav, root: this});
+  }
+
+  navigationBarRender () {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+      <Navigator.NavigationBar
+        routeMapper={this.navigationBar}
+        navigationStyles={Navigator.NavigationBar.StylesIOS}
+        style={style.mainNavBar}
+      />);
+  }
+
+  renderLoader () {
+    return (
+      <View style={style.mainNavBarButton}>
+        <Loader color='#0072BC' />
       </View>
     );
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  renderNoData () {
+    return (
+      <View
+        style={[{flex, alignItems: 'center', justifyContent: 'center'}, style.mainContainerWithNestedNavigationBar]}
+      >
+        <Text style={{fontSize: 18}}>No data available</Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={{flex}}>
+        {(() => {
+          return helper.isIOS() ? <StatusBar barStyle="light-content" /> : null;
+        })()}
+        <Navigator
+          style={{flex}}
+          initialRoute={{component: HomeScreen}}
+          renderScene={this.mainNavRenderScene.bind(this)}
+          navigationBar={this.navigationBarRender()}
+        />
+      </View>
+    );
+  }
+
+}
 
 AppRegistry.registerComponent('PopStats', () => PopStats);

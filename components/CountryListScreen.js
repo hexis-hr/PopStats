@@ -23,6 +23,7 @@ var flex = 1;
 //const POPDATA_ORIGIN_URL = 'http://popdata.unhcr.org/api/stats/origin.json';
 const POPDATA_ORIGIN_URL = 'http://api.hexis.hr/popstats/countries';
 const RECENT_KEY = 'RECENT';
+var android_section_header = () => helper.isAndroid() ? {fontWeight: 'normal'} : {};
 
 class CountryListScreen extends Component {
 
@@ -48,11 +49,17 @@ class CountryListScreen extends Component {
           })).cloneWithRowsAndSections(dataBlob)
         });
       });
+    }).catch(() => {
+      helper.alertNetworkError();
     }).done();
   }
 
   renderSectionHeader (sectionData, sectionID) {
-    return (<View style={style.listHeadingContainer}><Text style={style.listHeadingText}>{sectionID}</Text></View>);
+    return (
+      <View style={style.listHeadingContainer}>
+        <Text style={[style.listHeadingText, android_section_header()]}>{sectionID}</Text>
+      </View>
+    );
   }
 
   countryInfo (title, countryId) {
@@ -77,7 +84,9 @@ class CountryListScreen extends Component {
         onPress={this.countryInfo(data.origin_en, data.origin)}
       >
         <View style={style.listRowContainer}>
-          <Text style={style.listRowText}>{data.origin_en}</Text>
+          <View style={style.listRowTextContainer}>
+            <Text style={style.listRowText}>{data.origin_en}</Text>
+          </View>
           <Image
             style={{alignSelf: 'center', marginRight: 8}}
             source={require('../img/navigation/arrowRight.png')}

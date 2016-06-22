@@ -8,6 +8,7 @@
   "dependencies": {
     "react": "^15.1.0",
     "react-native": "^0.27.2",
+    "react-native-chart-android": "^1.0.3",
     "react-native-ios-charts": "^0.2.5"
   }
 }

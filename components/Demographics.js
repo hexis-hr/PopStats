@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  ScrollView,
   View,
   Animated,
   ListView,
@@ -66,7 +67,7 @@ class Demographics extends Component {
         }); });
       }
       this.setState({demographics});
-    }).done();
+    }).catch(() => { helper.alertNetworkError(); }).done();
   }
 
   maleTotalText () {
@@ -104,7 +105,7 @@ class Demographics extends Component {
     if (this.state.demographics === null) { return this.props.root.renderLoader(); }
     if (this.state.demographics === false) { return this.props.root.renderNoData(); }
     return (
-      <View style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
+      <ScrollView style={[{flex}, style.mainContainerWithNestedNavigationBar]}>
         <View style={{flexDirection: 'row'}}>
           {this.containerStyleMale()}
           {this.containerStyleFemale()}
@@ -184,7 +185,7 @@ class Demographics extends Component {
           </View>
         </View>
         <Disclaimer />
-      </View>
+      </ScrollView>
     );
   }
 

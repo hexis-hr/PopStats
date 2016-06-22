@@ -15,9 +15,11 @@ import {
 
 import style from '../styles/style';
 import fetcher from '../library/fetcher';
+import strings from '../library/strings';
 import helper from '../library/helper';
 import YearNavigator from './YearNavigator';
 import Disclaimer from './Disclaimer';
+import Warning from './Warning';
 
 const TOTAL = 0;
 const ALPHABETICALLY = 1;
@@ -84,7 +86,7 @@ class CountriesOfOrigin extends Component {
           rowHasChanged: helper.rowHasChanged
         })).cloneWithRows(data.countriesData.sort(currentSort)),
       });
-    });
+    }).catch((e) => { helper.alertNetworkError(); }).done();
   }
 
   componentDidMount () {
@@ -161,7 +163,9 @@ class CountriesOfOrigin extends Component {
           dataSource={this.state.countriesOfOrigin}
           renderSeparator={this.renderSeparator}
           renderRow={this.renderRow}
-          renderFooter={() => { return <Disclaimer />; }}
+          renderFooter={() => {
+            return <View style={{marginTop: 6}}><Warning warning={strings.asteriskWarning} /><Disclaimer /></View>;
+          }}
         />
       </View>
     );

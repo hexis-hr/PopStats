@@ -8,9 +8,11 @@ import {
   Modal,
   Picker,
   Image,
+  Platform,
 } from 'react-native';
 
 import style from '../styles/style';
+import helper from '../library/helper';
 import NavigatorButton from './NavigatorButton';
 
 const MIN_YEAR = 1951;
@@ -62,6 +64,40 @@ class YearNavigator extends Component {
     };
 
     var Title = (route, nav, index, navState) => {
+
+      if (helper.isAndroid()) {
+        return (
+          <View style={{flex, justifyContent: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 1,
+                borderColor: '#7998AC',
+                padding: 6,
+                flex: 1,
+                marginVertical: 4,
+              }}
+            >
+              <Picker style={{height: 50, width: 75}}
+                selectedValue={this.state.displayedYear.toString()}
+                onValueChange={(year) => {
+                    year = parseInt(year);
+                    this.props.root.state.year = year;
+                    this.setState({year, displayedPicker: false});
+                  }}
+              >
+                {this.props.root.state.availableYears.map((year) => {
+                  year = year.toString();
+                  return <Picker.Item label={year} value={year} key={year} />;
+                })}
+              </Picker>
+            </View>
+          </View>
+        );
+      }
+
       return (
         <View style={{flex, justifyContent: 'center'}}>
           <TouchableHighlight
@@ -129,7 +165,13 @@ class YearNavigator extends Component {
   }
 
   renderNavigationBar () {
-    return (<Navigator.NavigationBar routeMapper={this.navigationBar} style={style.nestedNavBar}/>);
+    return (
+      <Navigator.NavigationBar
+        routeMapper={this.navigationBar}
+        navigationStyles={Navigator.NavigationBar.StylesIOS}
+        style={style.nestedNavBar}
+      />
+    );
   }
 
   render() {

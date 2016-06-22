@@ -19,7 +19,7 @@ var fetcher = {
         others_of_concern: 0,
       };
       var url = PERSONS_OF_CONCERN_URL + '/year/' + year + '/country/' + countryId;
-      fetch(url).then((res) => res.json()).then((res) => {
+      fetch(url).then((res) => res.json()).catch(() => { reject(Error('Network error')); }).then((res) => {
         res.data.forEach((value, key) => {
           personsOfConcern.total += helper.nanFilter(value.total_population);
           personsOfConcern.refugees += helper.nanFilter(value.refugees) +
@@ -44,7 +44,7 @@ var fetcher = {
   demographics: (year, countryId) => {
     var url = DEMOGRAPHICS_URL + '/year/' + year + '/country/' + countryId;
     return new Promise((resolve, reject) => {
-      fetch(url).then((res) => res.json()).then((res) => {
+      fetch(url).then((res) => res.json()).catch(() => { reject(Error('Network error')); }).then((res) => {
         resolve([res]);
       }).done();
     });
@@ -53,7 +53,7 @@ var fetcher = {
   asylumSeekers: (year, countryId) => {
     var url = ASYLUM_SEEKERS_URL + '/year/' + year + '/country/' + countryId;
     return new Promise((resolve, reject) => {
-      fetch(url).then((res) => res.json()).then((res) => {
+      fetch(url).then((res) => res.json()).catch(() => { reject(Error('Network error')); }).then((res) => {
         resolve([res]);
       }).done();
     });
@@ -61,7 +61,11 @@ var fetcher = {
 
   availableYears: () => {
     return new Promise((resolve, reject) => {
-      fetch(YEARS_URL).then((res) => res.json()).then((res) => { resolve(res); }).done();
+      fetch(YEARS_URL).
+        then((res) => res.json()).
+        catch(() => { reject(Error('Network error')); }).
+        then((res) => { resolve(res); }).
+        done();
     });
   }
 

@@ -1,3 +1,5 @@
+import { Platform, Alert } from 'react-native';
+
 var helper = {
 
   nanFilter: (value) => {
@@ -14,7 +16,7 @@ var helper = {
   formatNumber: (number) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
 
   personsOfConcernKeys: {
-    'Refugess': 'refugees',
+    'Refugees': 'refugees',
     'Asylum-seekers': 'asylum_seekers',
     'IDP\'s': 'idps',
     'Returnees': 'returnees',
@@ -24,7 +26,15 @@ var helper = {
 
   getHexisLink: () => {
     return 'http://hexis.hr/en/?ref=popstats';
-  }
+  },
+
+  isAndroid: () => Platform.OS === 'android',
+
+  isIOS: () => Platform.OS === 'ios',
+
+  alertNetworkError: () => {
+    Alert.alert('Network error', 'Can\'t connect to network, please enable network access and try again.');
+  },
 
 };
 

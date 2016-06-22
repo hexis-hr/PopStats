@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Animated,
   ListView,
   TouchableHighlight,
@@ -17,7 +18,9 @@ import {
 import style from '../styles/style';
 import fetcher from '../library/fetcher';
 import helper from '../library/helper';
+import strings from '../library/strings';
 import YearNavigator from './YearNavigator';
+import Warning from './Warning';
 import Disclaimer from './Disclaimer';
 
 var flex = 1;
@@ -64,7 +67,7 @@ class AsylumSeekers extends Component {
       this.setState({asylumSeekers: (new ListView.DataSource({
         rowHasChanged: helper.rowHasChanged
       })).cloneWithRows(asylumSeekers)});
-    }).done();
+    }).catch(() => { helper.alertNetworkError(); }).done();
   }
 
   renderRow (row) {
@@ -165,7 +168,7 @@ class AsylumSeekers extends Component {
           style={style.asylumSeekersPadding}
           dataSource={this.state.asylumSeekers}
           renderRow={this.renderRow.bind(this)}
-          renderFooter={() => { return <Disclaimer />;}}
+          renderFooter={() => { return <View><Warning warning={strings.asteriskWarning} /><Disclaimer /></View>;}}
         />
       </View>
     );
