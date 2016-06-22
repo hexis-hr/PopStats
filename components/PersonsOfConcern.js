@@ -12,12 +12,16 @@ import {
   ScrollView,
   TouchableHighlight,
   Image,
+  Platform,
+  requireNativeComponent,
 } from 'react-native';
 
 import { PieChart } from 'react-native-ios-charts';
 import style from '../styles/style';
 import helper from '../library/helper';
+import strings from '../library/strings';
 import CountriesOfOriginScreen from './CountriesOfOriginScreen';
+import Warning from './Warning';
 import Disclaimer from './Disclaimer';
 
 const RESETTLEMENT_URL = 'http://api.hexis.hr/popstats/resettlement'
@@ -25,13 +29,15 @@ const PERSONS_OF_CONCERN_URL = 'http://api.hexis.hr/popstats/persons_of_concern'
 
 var flex = 1;
 var dataKeys = {
-  'Refugess': 'refugees',
+  'Refugees': 'refugees',
   'Asylum-seekers': 'asylum_seekers',
   'IDP\'s': 'idps',
   'Returnees': 'returnees',
   'Stateless persons': 'stateless_persons',
   'Others': 'others_of_concern',
 };
+
+var MPPieChart = requireNativeComponent('MPPieChart', PersonsOfConcern);
 
 class PersonsOfConcern extends Component {
 
@@ -118,7 +124,7 @@ class PersonsOfConcern extends Component {
         this.setState({
           personsOfConcernTotal: personsOfConcern.total,
           personsOfConcern: (new ListView.DataSource({rowHasChanged})).cloneWithRows({
-            'Refugess': {
+            'Refugees': {
               value: this.state.personsOfConcern.refugees,
               color: '#E59696',
             },
@@ -148,8 +154,8 @@ class PersonsOfConcern extends Component {
           personsOfConcernChart,
           resettlementTotal
         })
-      }).done();
-    }).done();
+      }).catch(() => { helper.alertNetworkError(); }).done();
+    }).catch(() => { helper.alertNetworkError(); }).done();
   }
 
   componentDidMount () {
@@ -193,6 +199,13 @@ class PersonsOfConcern extends Component {
     );
   }
 
+  renderSeparator (data) {
+    var rowCount = data.getRowCount() - 1;
+    return (sectionId, rowId) => {
+      if (rowId != rowCount) { return (<View key={rowId + 'k'} style={style.statisticsSeparator}/>); }
+    }
+  }
+
   renderSeparatorTopCountriesOfOrigin (sectionId, rowId) {
     if (rowId !== '5') { return (<View key={rowId + 'k'} style={style.statisticsSeparator}/>); }
   }
@@ -222,7 +235,7 @@ class PersonsOfConcern extends Component {
             style={{flex, padding: 10}}
             dataSource={this.state.resettlement}
             renderRow={this.renderRowResettlement}
-            renderSeparator={this.renderSeparatorTopCountriesOfOrigin}
+            renderSeparator={this.renderSeparator(this.state.resettlement)}
             scrollEnabled={false}
             enableEmptySections={true}
           />
@@ -253,7 +266,28 @@ class PersonsOfConcern extends Component {
             <Text style={style.card_header_value}>{helper.formatNumber(this.state.personsOfConcernTotal)}</Text>
           </View>
           <View style={style.statisticsBody}>
-            <PieChart config={this.state.personsOfConcernChart} style={style.statisticsChart}/>
+            {(() => {
+              if (Platform.OS === 'android') {
+                return (
+                  <MPPieChart
+                    data={{
+                      xValues: [''],
+                      yValues: [{
+                      data: this.state.personsOfConcernChart.dataSets[0].values,
+                      label: '',
+                      config: {colors: this.state.personsOfConcernChart.dataSets[0].colors}}]
+                    }}
+                    style={{flex: 0, width: 125, height: 145}}
+                    description={''}
+                    touchEnabled={false}
+                    legend={{enable: false}}
+                    borderWidth={0}
+                  />
+                );
+              } else {
+                return (<PieChart config={this.state.personsOfConcernChart} style={style.statisticsChart}/>);
+              }
+            })()}
             <View style={style.statisticsChartLegend}>
               <ListView
                 style={{flex: 0, paddingRight: 8}}
@@ -277,7 +311,7 @@ class PersonsOfConcern extends Component {
               style={{flex, padding: 10}}
               dataSource={this.state.topCountriesOfOrigin}
               renderRow={this.renderRowTopCountriesOfOrigin}
-              renderSeparator={this.renderSeparatorTopCountriesOfOrigin}
+              renderSeparator={this.renderSeparator(this.state.topCountriesOfOrigin)}
               enableEmptySections={true}
             />
           </View>
@@ -292,7 +326,7 @@ class PersonsOfConcern extends Component {
                 });
               }}
             >
-              <View style={{flex, flexDirection: 'row'}}>
+              <View style={[{flex, flexDirection: 'row'}, {paddingLeft: 10, paddingVertical: 12}]}>
                 <Text style={style.listRowText}>Countries of origin</Text>
                 <Image
                   style={{alignSelf: 'center', marginRight: 8}}
@@ -303,6 +337,7 @@ class PersonsOfConcern extends Component {
           </View>
         </View>
         {this.renderTopResettlement()}
+        <Warning warning={strings.asteriskWarning} />
         <Disclaimer />
       </ScrollView>
     );

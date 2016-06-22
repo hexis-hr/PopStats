@@ -41,7 +41,9 @@ class Disclaimer extends Component {
                   this.setState({modalOn: false});
                 }}
               >
-                <Text style={{color: '#898E91', padding: 16, fontWeight: 'bold', fontSize: 18}}>X</Text>
+                <View style={{padding: 16}}>
+                  <Text style={{color: '#898E91', fontWeight: 'bold', fontSize: 18}}>X</Text>
+                </View>
               </TouchableHighlight>
             </View>
             <View>
@@ -57,7 +59,7 @@ class Disclaimer extends Component {
                 Hexis j.d.o.o. is not responsible for authenticity and veracity of the data.{'\n'}
               </Text>
               <Text style={style.disclaimer_text}>
-                For all information and inquiries related to population statistics please visit popstats.unhrcr.org.
+                For all information and inquiries related to population statistics please visit popstats.unhcr.org.
                 {'\n'}
               </Text>
               <Text style={style.disclaimer_text}>
@@ -67,7 +69,7 @@ class Disclaimer extends Component {
           </View>
         </Modal>
         <TouchableHighlight
-          style={{flex, margin: 8}}
+          style={[{flex, margin: 8}, style.transparentButtonContainer]}
           onPress={() => {
             this.setState({modalOn: true});
           }}
@@ -75,14 +77,12 @@ class Disclaimer extends Component {
           <Text style={style.transparentButton}>Disclaimer</Text>
         </TouchableHighlight>
         <TouchableHighlight
-          style={{flex, margin: 8}}
+          style={[{flex, margin: 8}, style.transparentButtonContainer]}
           onPress={() => {
             Linking.openURL(helper.getHexisLink());
           }}
         >
-          <Text
-            style={style.transparentButton}
-          >Made by Hexis</Text>
+          <Text style={style.transparentButton}>Made by Hexis</Text>
         </TouchableHighlight>
       </View>
     );

@@ -127,7 +127,7 @@ var style = StyleSheet.create({
       card_header_subtitle: {
         color: text.color.light,
         fontSize: 13,
-        lineHeight: 13 * 1.35,
+        lineHeight: Math.floor(13 * 1.35),
         fontWeight: '400',
       },
 
@@ -183,7 +183,7 @@ var style = StyleSheet.create({
         fontSize: text.size.bodySmall,
         color: text.color.body,
         fontWeight: 'normal',
-        lineHeight: text.size.bodySmall * 1.35,
+        lineHeight: Math.floor(text.size.bodySmall * 1.35),
       },
 
 
@@ -246,15 +246,18 @@ var style = StyleSheet.create({
     textAlign: 'center',
   },
 
+  transparentButtonContainer: {
+    padding: 14,
+    borderColor: '#7998AC',
+    borderWidth: 1,
+    backgroundColor: '#DDE6ED',
+    borderRadius: 2,
+  },
+
   transparentButton: {
     fontSize: 14,
     fontWeight: '400',
     color: '#7998AC',
-    borderColor: '#7998AC',
-    padding: 14,
-    borderWidth: 1,
-    backgroundColor: '#DDE6ED',
-    borderRadius: 2,
     textAlign: 'center'
   },
 
@@ -287,7 +290,8 @@ var style = StyleSheet.create({
   mainNavBarTitleText: {
     fontSize: 16,
     padding: 8,
-    color: 'white'
+    textAlign: 'center',
+    color: 'white',
   },
 
   mainNavBarButtonText: {
@@ -311,6 +315,7 @@ var style = StyleSheet.create({
   },
 
   listHeadingContainer: {
+    padding: 13,
     backgroundColor: backgroundGrey,
   },
 
@@ -318,7 +323,6 @@ var style = StyleSheet.create({
     color: textGrey,
     fontSize: 15,
     fontWeight: '500',
-    padding: 13,
   },
 
   listRowContainer: {
@@ -330,10 +334,14 @@ var style = StyleSheet.create({
     backgroundColor: 'white',
   },
 
+  listRowTextContainer: {
+    flex,
+    padding: 12,
+  },
+
   listRowText: {
     color: mainBlue,
     fontSize: 17,
-    padding: 12,
     fontWeight: '400',
     flex: 1,
   },
@@ -714,5 +722,7 @@ var style = StyleSheet.create({
   // }
 
 });
+
+style.colors = {mainBlue, backgroundGrey};
 
 module.exports = style;

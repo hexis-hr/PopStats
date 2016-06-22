@@ -10,6 +10,7 @@ import {
   View,
   TouchableHighlight,
   Image,
+  Navigator,
 } from 'react-native';
 
 import style from '../styles/style';
